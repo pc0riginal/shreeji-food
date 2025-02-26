@@ -3,7 +3,11 @@
     font-size: 1.5em;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -23,4 +27,9 @@ h1 {
     display: block;       /* Ensure proper rendering */
     aspect-ratio: 1 / 1;  /* Ensure a square shape */
     border-radius: 5px;   /* Optional rounded corners */
+}
+
+.footer {
+    background-color: #CCCCFF;
+    margin-bottom: 0;
 }

@@ -1,28 +1,29 @@
 {% include 'header.html' %}
 {% include 'navbar.html' %}
-
 <div class="container mt-5">
     <h1 class="text-center mb-4">Gujarati Namkeen</h1>
 
     <div class="row">
         {% for prod in products %}
-            {% for product_id, product in prod.items() %}
-            <div class="col-md-3 col-sm-6 mb-4">
-                <div class="card shadow-sm border-0">
-                    <img src="{{ url_for('static', path='images/' + product['image']) }}" class="card-img-top" alt="{{ product['name'] }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product['name'] }}</h5>
-                        <p class="card-text">
-                            <strong>Price:</strong> <span class="text-success">&#8377;{{ product['price'] }}</span><br>
-                            <strong>Quantity:</strong> {{ product['quantity'] }}
-                        </p>
-                        <button class="btn btn-primary w-100" onclick="addToCart('{{ product_id }}', this)">Add to Cart</button>
-                        <!-- Flash Message inside Card -->
-                        <div class="flash-message alert alert-success text-center d-none mt-2 p-2" role="alert"></div>
-                    </div>
+        {% for product_id, product in prod.items() %}
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card shadow-sm border-0">
+                <img src="{{ url_for('static', path='images/' + product['image']) }}" class="card-img-top"
+                    alt="{{ product['name'] }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product['name'] }}</h5>
+                    <p class="card-text">
+                        <strong>Price:</strong> <span class="text-success">&#8377;{{ product['price'] }}</span><br>
+                        <strong>Quantity:</strong> {{ product['quantity'] }}
+                    </p>
+                    <button class="btn btn-primary w-100" onclick="addToCart('{{ product_id }}', this)">Add to
+                        Cart</button>
+                    <!-- Flash Message inside Card -->
+                    <div class="flash-message alert alert-success text-center d-none mt-2 p-2" role="alert"></div>
                 </div>
             </div>
-            {% endfor %}
+        </div>
+        {% endfor %}
         {% endfor %}
     </div>
 
@@ -31,25 +32,25 @@
         {% if page > 1 %}
         <a href="/products?page={{ page - 1 }}" class="btn btn-outline-primary mx-2">Previous</a>
         {% endif %}
-    
+
         {% for p in range(1, total_pages + 1) %}
-            {% if p == page %}
-            <span class="mx-2 font-weight-bold">{{ p }}</span>
-            {% else %}
-            <a href="/products?page={{ p }}" class="btn btn-outline-secondary mx-2">{{ p }}</a>
-            {% endif %}
-        {% endfor %}
-    
-        {% if page < total_pages %}
-        <a href="/products?page={{ page + 1 }}" class="btn btn-outline-primary mx-2">Next</a>
+        {% if p == page %}
+        <span class="mx-2 font-weight-bold">{{ p }}</span>
+        {% else %}
+        <a href="/products?page={{ p }}" class="btn btn-outline-secondary mx-2">{{ p }}</a>
         {% endif %}
+        {% endfor %}
+
+        {% if page < total_pages %} <a href="/products?page={{ page + 1 }}" class="btn btn-outline-primary mx-2">
+            Next</a>
+            {% endif %}
     </div>
 </div>
 
 <script>
     async function addToCart(productId, button) {
         const response = await fetch(`/add-to-cart?product_id=${productId}`);
-        
+
         if (response.status === 401) {
             window.location.href = "/login";  // Redirect to login page
         } else {

@@ -1,6 +1,7 @@
 from pymongo import MongoClient
-
-client = MongoClient("mongodb+srv://msm98:paras123@cluster0.4gnmc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+import os
+mongo_uri = os.getenv('mongo_uri')
+client = MongoClient(mongo_uri)
 
 db = client['food']
 

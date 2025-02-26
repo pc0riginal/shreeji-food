@@ -8,6 +8,7 @@ from fastapi import (
     status,
     Depends,
 )
+from dotenv import load_dotenv
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
@@ -20,8 +21,9 @@ import os
 import shutil
 from urllib.parse import quote
 
+load_dotenv()
 # Constants
-SECRET_KEY = "e4bd6393dd6b40d8952c4a1e9755970a8b393c2b4742dcdea82e3f86c3b76199"  # Change this in production!
+SECRET_KEY = os.getenv('SECRET_KEY')  # Change this in production!
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 ACCESS_TOKEN_EXPIRE = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
 
@@ -47,7 +49,6 @@ def load_user(email: str):
     user_data = users.find_one({"email": email})
     if not user_data:
         return RedirectResponse("/login", status_code=302)
-
     try:
         return models.User(**user_data)
     except Exception as e:
@@ -92,11 +93,10 @@ def login(req: Request):
 @app.post("/login")
 async def login(req: Request, email: str = Form(...), password: str = Form(...)):
     user = load_user(email)
-    if not user:
+    if not user or isinstance(user,RedirectResponse):
         return templates.TemplateResponse(
             "login.html", {"request": req, "error": "User not found"}
         )
-
     if not user.verify_password(password):
         return templates.TemplateResponse(
             "login.html", {"request": req, "error": "Invalid Credential"}

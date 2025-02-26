@@ -9,9 +9,9 @@
 
                 <!-- Display Error Message -->
                 {% if error %}
-                <div class="alert alert-danger text-center">
-                    {{ error }}
-                </div>
+                    <div id="error-message" class="alert alert-danger text-center">
+                        {{ error }}
+                    </div>
                 {% endif %}
 
                 <form method="post" action="/login">
@@ -38,3 +38,15 @@
 </div>
 
 {% include 'footer.html' %}
+
+<!-- JavaScript to remove the error message after 3 seconds -->
+<script>
+    setTimeout(function () {
+        let errorMessage = document.getElementById("error-message");
+        if (errorMessage) {
+            errorMessage.style.transition = "opacity 0.5s ease-out";
+            errorMessage.style.opacity = "0";
+            setTimeout(() => errorMessage.remove(), 500);
+        }
+    }, 3000);
+</script>

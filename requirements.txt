@@ -3,5 +3,6 @@ passlib[bcrypt]
 fastapi-login
 uvicorn
 python-multipart
+python-dotenv
 pymongo
 Jinja2
