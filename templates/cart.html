@@ -1,0 +1,62 @@
+{% include 'header.html' %}
+{% include 'navbar.html' %}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Your Cart</h1>
+
+    {% if cart["items"] %}
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product_id, product in cart['items'].items() %}
+            <tr>
+                <td>
+                    <img src="{{ url_for('static', path='images/' + product['image']) }}" width="50">
+                    {{ product['name'] }}
+                </td>
+                <td>&#8377;{{ product['price'] }}</td>
+                <td>
+                    <a href="/update-cart?product_id={{ product_id }}&action=decrease"
+                        class="btn btn-sm btn-outline-danger">-</a>
+                    {{ product['quantity'] }}
+                    <a href="/update-cart?product_id={{ product_id }}&action=increase"
+                        class="btn btn-sm btn-outline-success">+</a>
+                </td>
+                <td>&#8377;{{ product['price'] * product['quantity'] }}</td>
+                <td>
+                    <a href="/remove-from-cart?product_id={{ product_id }}" class="btn btn-sm btn-danger">Remove</a>
+                </td>
+            </tr>
+            {% endfor %}
+            <!-- Total Row -->
+            <tr>
+                <td colspan="3" class="text-end"><strong>Total Amount:</strong></td>
+                <td><strong>&#8377;{{ total_price }}</strong></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- WhatsApp Order Button -->
+    <div class="text-center mt-4">
+        <a target="_blank" rel="noopener noreferrer"
+            href="https://api.whatsapp.com/send?phone={{ whatsapp_number }}&text={{ order_summary }}"
+            class="btn btn-success btn-lg" onclick="setTimeout(() => { window.location.href='/clear-cart'; }, 3000);">
+            <i class="fab fa-whatsapp"></i> Review & Pay on WhatsApp
+        </a>
+    </div>
+
+    {% else %}
+    <p class="text-center">Your cart is empty.</p>
+    {% endif %}
+</div>
+
+{% include 'footer.html' %}

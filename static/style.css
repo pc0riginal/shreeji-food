@@ -1,0 +1,26 @@
+.navbar-brand{
+    font-weight: 600;
+    font-size: 1.5em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.card-img-top {
+    width: 100%;          /* Ensure full width */
+    height: 250px;        /* Fixed height */
+    object-fit: cover;    /* Crop to fit */
+    display: block;       /* Ensure proper rendering */
+    aspect-ratio: 1 / 1;  /* Ensure a square shape */
+    border-radius: 5px;   /* Optional rounded corners */
+}
