@@ -1,6 +1,8 @@
 pydantic[email]
 passlib[bcrypt] 
 fastapi-login
-shutil
 urllib
 uvicorn
+python-multipart
+pymongo
+Jinja2
