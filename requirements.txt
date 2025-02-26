@@ -3,3 +3,4 @@ passlib[bcrypt]
 fastapi-login
 shutil
 urllib
+uvicorn
